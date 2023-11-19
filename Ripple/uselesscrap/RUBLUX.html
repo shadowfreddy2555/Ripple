@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ripple</title>
+    <style>
+        /* Updated CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+        }
+
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"],
+        #logoutButton,
+        #firstGameButton,
+        #downloadAppButton {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            background-color: transparent;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover,
+        #logoutButton:hover,
+        #firstGameButton:hover,
+        #downloadAppButton:hover {
+            background-color: #555;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        #loggedInUser {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: none;
+        }
+
+        .hammer-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url('https://media.istockphoto.com/id/867290418/vector/hammer-icon-black-minimalist-icon-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=xhDARLKz15x9F3agoDBE7bnkAFn0G8V0nGyqO9gP6Z8=');
+            background-size: contain;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Ripple</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <input type="submit" value="Login">
+            <p class="error-message" id="errorMessage"></p>
+        </form>
+        <p id="loggedInUser"></p>
+        <button id="firstGameButton" style="display: none;">The first game</button>
+        <button id="logoutButton" style="display: none;">Logout</button>
+        <button id="downloadAppButton" style="display: none;">Download the app to play!</button>
+    </div>
+
+    <script>
+        const accounts = [
+            { username: "shadow", password: "2023" },
+            { username: "glitch", password: "0000" },
+            { username: "guest", password: "guest" }
+        ];
+
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const account = accounts.find(acc => acc.username === username && acc.password === password);
+            if (account) {
+                document.getElementById("loginForm").style.display = "none";
+                const loggedInUser = document.getElementById("loggedInUser");
+                loggedInUser.textContent = account.username;
+                loggedInUser.style.display = "inline-block";
+                if (account.username === "shadow") {
+                    const hammerIcon = document.createElement("span");
+                    hammerIcon.classList.add("hammer-icon");
+                    loggedInUser.appendChild(hammerIcon);
+                }
+                document.getElementById("logoutButton").style.display = "inline-block";
+                document.getElementById("firstGameButton").style.display = "inline-block";
+                document.getElementById("downloadAppButton").style.display = "inline-block";
+                document.getElementsByTagName("h2")[0].textContent = "Ripple";
+            } else {
+                document.getElementById("errorMessage").textContent = "Invalid username or password.";
+            }
+        });
+
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("loggedInUser").style.display = "none";
+            document.getElementById("logoutButton").style.display = "none";
+            document.getElementById("firstGameButton").style.display = "none";
+            document.getElementById("downloadAppButton").style.display = "none";
+            document.getElementsByTagName("h2")[0].textContent = "The Unnamed Game";
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("errorMessage").textContent = "";
+        });
+    </script>
+</body>
+
+</html>
